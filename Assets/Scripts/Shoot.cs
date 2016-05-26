@@ -1,22 +1,16 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class Shoot : MonoBehaviour {
 
-	public ParticleSystem Particle;
-
-	void Start()
-	{
-
-	}
+	public Transform Particle;
+	public Transform MuzzlePosition;
 
 	void Update()
 	{
-		if (Input.GetMouseButtonDown(0))
+		if (Input.GetKeyDown(KeyCode.Period))
 		{
-			var position = transform.position + Vector3.forward*-6;
-			position = new Vector3(position.x, position.y+1, position.z);
-			Instantiate(Particle, position, Quaternion.identity);
+			var flash = (Transform)Instantiate(Particle, MuzzlePosition.position, Quaternion.identity);
+			flash.parent = gameObject.transform;
 		}
 
 	}
