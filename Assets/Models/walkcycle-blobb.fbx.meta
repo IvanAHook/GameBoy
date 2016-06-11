@@ -1,0 +1,125 @@
+fileFormatVersion: 2
+guid: 35141265e5ac9463b81edda4be6cdebf
+timeCreated: 1465639442
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: bipedBall
+    100002: cog_jnt1
+    100004: L_ankle_jnt1
+    100006: L_ball_jnt1
+    100008: L_distanceLocator1
+    100010: L_distanceLocator2
+    100012: L_foot_CTRL
+    100014: L_heel_jnt1
+    100016: L_hip_jnt1
+    100018: L_knee_jnt1
+    100020: L_legDistance
+    100022: L_toe_jnt1
+    100024: moveMe_CTRL
+    100026: placement_control
+    100028: R_ankle_jnt1
+    100030: R_ball_jnt1
+    100032: R_distanceLocator1
+    100034: R_distanceLocator2
+    100036: R_foot_CTRL
+    100038: R_heel_jnt1
+    100040: R_hip_jnt1
+    100042: R_knee_jnt1
+    100044: R_legDistance
+    100046: R_toe_jnt1
+    100048: //RootNode
+    400000: bipedBall
+    400002: cog_jnt1
+    400004: L_ankle_jnt1
+    400006: L_ball_jnt1
+    400008: L_distanceLocator1
+    400010: L_distanceLocator2
+    400012: L_foot_CTRL
+    400014: L_heel_jnt1
+    400016: L_hip_jnt1
+    400018: L_knee_jnt1
+    400020: L_legDistance
+    400022: L_toe_jnt1
+    400024: moveMe_CTRL
+    400026: placement_control
+    400028: R_ankle_jnt1
+    400030: R_ball_jnt1
+    400032: R_distanceLocator1
+    400034: R_distanceLocator2
+    400036: R_foot_CTRL
+    400038: R_heel_jnt1
+    400040: R_hip_jnt1
+    400042: R_knee_jnt1
+    400044: R_legDistance
+    400046: R_toe_jnt1
+    400048: //RootNode
+    4300000: bipedBall
+    7400000: Take 001
+    9500000: //RootNode
+    13700000: bipedBall
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleRotations: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 20
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

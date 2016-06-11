@@ -30,4 +30,22 @@ public class Terminal : MonoBehaviour
 		return string.Format("command {0} does not exist", command);
 	}
 
+	void OnTriggerEnter(Collider other) 
+	{
+		if (other.transform.tag == "Player")
+		{
+			Debug.Log (string.Format("{0} Enter terminal collider", other.transform.name));
+			// open terminal
+		}
+	}
+
+	void OnTriggerExit(Collider other)
+	{
+		if (other.transform.tag == "Player")
+		{
+			Debug.Log (string.Format("{0} Exit terminal collider", other.transform.name));
+			// set Terminal visuals to idle.
+		}
+	}
+
 }
