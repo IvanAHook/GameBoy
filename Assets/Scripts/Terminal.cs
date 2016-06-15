@@ -39,7 +39,8 @@ public class Terminal : MonoBehaviour
 		if (_commands.TryGetValue(command, out action))
 		{
 			action.Invoke(args);
-			TerminalText.text += "\n" +string.Format("executing {0}", command);
+			TerminalText.text += Environment.NewLine + string.Format("su@root: {0}", input);
+			TerminalText.text += Environment.NewLine + string.Format("executing {0}", command);
 			return;
 			//return string.Format("executing {0}", command);
 		}
