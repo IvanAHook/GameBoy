@@ -2,32 +2,49 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
+using UnityEngine.UI;
 
 public class Terminal : MonoBehaviour
 {
+	public Text TerminalText;
 
 	private static readonly char[] DelimiterChars = { ' ' };
-	//private string[] _commands;
 	private Dictionary<string, Action<string[]>> _commands;
 
 	void Start () {
 		// populate _commands
+		_commands = new Dictionary<string, Action<string[]>>();
+		_commands.Add("puss", strings =>
+		{
+			foreach (var s in strings)
+			{
+				Debug.Log("... " + s);
+			}
+		});
 	}
 
-	public string ParseCommand(string input)
+	public void ParseCommand(string input)
 	{
 		var commands = input.Split(DelimiterChars).ToList();
 		var command = commands[0];
 		commands.Remove(command);
 		var args = commands.ToArray();
 
+		input = Regex.Replace(input, @"\s+", "");
+
+		Debug.Log(input);
+
 		Action<string[]> action;
 		if (_commands.TryGetValue(command, out action))
 		{
 			action.Invoke(args);
-			return string.Format("executing {0}", command);
+			TerminalText.text += "\n" +string.Format("executing {0}", command);
+			return;
+			//return string.Format("executing {0}", command);
 		}
-		return string.Format("command {0} does not exist", command);
+		TerminalText.text = string.Format("command {0} does not exist", command);
+		//return string.Format("command {0} does not exist", command);
 	}
 
 	void OnTriggerEnter(Collider other) 
