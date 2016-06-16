@@ -68,8 +68,7 @@ Shader "Shader Forge/Toon" {
                 float3 lightColor = _LightColor0.rgb;
 ////// Lighting:
                 float attenuation = LIGHT_ATTENUATION(i);
-                float node_3489 = dot(i.normalDir,lightDirection);
-                float node_6423 = ((attenuation*sign(saturate(node_3489)))*2.0);
+                float node_6423 = ((attenuation*sign(saturate(dot(i.normalDir,lightDirection))))*2.0);
                 float4 node_3271 = tex2D(_node_4365,TRANSFORM_TEX(i.uv0, _node_4365));
                 float3 finalColor = (float3(float2(node_6423,node_6423),0.0)*(node_3271.rgb*_LightColor0.rgb));
                 fixed4 finalRGBA = fixed4(finalColor,1);
@@ -129,8 +128,7 @@ Shader "Shader Forge/Toon" {
                 float3 lightColor = _LightColor0.rgb;
 ////// Lighting:
                 float attenuation = LIGHT_ATTENUATION(i);
-                float node_3489 = dot(i.normalDir,lightDirection);
-                float node_6423 = ((attenuation*sign(saturate(node_3489)))*2.0);
+                float node_6423 = ((attenuation*sign(saturate(dot(i.normalDir,lightDirection))))*2.0);
                 float4 node_3271 = tex2D(_node_4365,TRANSFORM_TEX(i.uv0, _node_4365));
                 float3 finalColor = (float3(float2(node_6423,node_6423),0.0)*(node_3271.rgb*_LightColor0.rgb));
                 fixed4 finalRGBA = fixed4(finalColor * 1,0);
