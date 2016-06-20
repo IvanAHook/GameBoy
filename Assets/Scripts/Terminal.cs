@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 using System.Collections.Generic;
@@ -18,6 +18,10 @@ public class Terminal : MonoBehaviour
 
 	public Text TerminalText;
 	public InputField TerminalInputField;
+	public Transform TerminalTransform;
+
+	public AudioSource _audioSource;
+	public AudioClip KeyboardClick;
 
 	private static readonly char[] DelimiterChars = { ' ' };
 	private Dictionary<string, Action<string[]>> _commands;
@@ -26,6 +30,7 @@ public class Terminal : MonoBehaviour
 
 	private void Start ()
 	{
+		_audioSource = GetComponent<AudioSource>();
 		// populate _commands
 		_commands = new Dictionary<string, Action<string[]>>();
 		_commands.Add("PUSS", strings =>
@@ -52,9 +57,21 @@ public class Terminal : MonoBehaviour
 				PrintToTerminalTabbed(Commands[i].name);
 			}
 		});
+		_commands.Add("CLEAR", strings =>
+		{
+			TerminalText.text = "";
+		});
 
 		TerminalInputField.caretWidth = 10;
 		TerminalInputField.caretBlinkRate = 1;
+	}
+
+	private void Update()
+	{
+		if (Input.GetKeyDown(KeyCode.T))
+		{
+			ResetTerminalInputField();
+		}
 	}
 
 	public void ParseCommand(string input)
@@ -69,7 +86,7 @@ public class Terminal : MonoBehaviour
 		Action<string[]> action;
 		if(_commands.TryGetValue(command, out action))
 		{
-			PrintToTerminal(string.Format("> {0}", input));
+			PrintToTerminal(string.Format("{0}", input));
 			action.Invoke(args);
 			ResetTerminalInputField();
 			return;
@@ -80,7 +97,7 @@ public class Terminal : MonoBehaviour
 			{
 				if(Commands[i].name == command)
 				{
-					PrintToTerminal(string.Format("> {0}", input));
+					PrintToTerminal(string.Format("{0}", input));
 					PrintToTerminal(string.Format("EXECUTING {0}", command));
 					Commands[i].action.Invoke();
 					ResetTerminalInputField();
@@ -113,7 +130,12 @@ public class Terminal : MonoBehaviour
 
 	public void OnValueChanged()
 	{
-		TerminalInputField.text.ToUpper(); /*= string.Format("> {0}", TerminalInputField.text.ToUpper());*/
+		_audioSource.PlayOneShot(KeyboardClick, 1f);
+		var text = TerminalInputField.text;
+		if (text != TerminalInputField.text.ToUpper()) {
+			TerminalInputField.text = TerminalInputField.text.ToUpper();
+		}
+		//TerminalInputField.text.ToUpper(); /*= string.Format("> {0}", TerminalInputField.text.ToUpper());*/
 	}
 
 }
