@@ -2,12 +2,18 @@
 using System.Collections;
 using DG.Tweening;
 
-public class Door : MonoBehaviour {
+public class Door : ConnectedObject
+{
 
-	public Transform LeftDoor;
+    public Transform LeftDoor;
 	public Transform RightDoor;
 
 	private bool _isOpen = false;
+
+    private void Awake()
+    {
+        base.ObjectType = ObjectType.Door;
+    }
 
 	public void Open(string args)
 	{
