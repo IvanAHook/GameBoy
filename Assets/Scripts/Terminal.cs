@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 using System.Collections.Generic;
@@ -113,13 +114,27 @@ public class Terminal : MonoBehaviour
 
 	private void PrintToTerminal(string input)
 	{
+		//PrintText(string.Format(input));
 		TerminalText.text += Environment.NewLine + string.Format(input);
 	}
 
 	private void PrintToTerminalTabbed(string input)
 	{
+		//PrintText("    " + string.Format(input));
 		TerminalText.text += Environment.NewLine + "    " + string.Format(input);
 	}
+
+	//private IEnumerator PrintText(string input)
+	//{
+	//	var chars = input.ToCharArray();
+
+	//	TerminalText.text += Environment.NewLine;
+	//	for (int i = 0; i < chars.Length; i++)
+	//	{
+	//		TerminalText.text += chars[i];
+	//		yield return new WaitForFixedUpdate();
+	//	}
+	//} 
 
 	private void ResetTerminalInputField()
 	{
