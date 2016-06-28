@@ -1,9 +1,7 @@
 using System;
 using UnityEngine;
-using UnityEngine.Events;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 using UnityEngine.UI;
 using System.Collections;
 
@@ -23,6 +21,7 @@ public class TerminalManager : MonoBehaviour
     public Text TerminalText;
 	public InputField TerminalInputField;
 	public Transform TerminalTransform;
+	public Canvas TerminalCanvas;
 
 	public AudioSource _audioSource;
 	public AudioClip KeyboardClick;
@@ -30,7 +29,7 @@ public class TerminalManager : MonoBehaviour
 	private static readonly char[] DelimiterChars = { ' ' };
 	private Dictionary<string, Action<string[]>> _commands;
 
-    private Dictionary<string, ConnectedObject> _connectedObjects;
+    private Dictionary<string, ConnectedObjectBase> _connectedObjects;
 
     private void Awake()
     {
@@ -43,20 +42,9 @@ public class TerminalManager : MonoBehaviour
     private void Start ()
 	{
 		_audioSource = GetComponent<AudioSource>();
-        // populate _commands
-        _connectedObjects = new Dictionary<string, ConnectedObject>();
+        _connectedObjects = new Dictionary<string, ConnectedObjectBase>();
         _commands = new Dictionary<string, Action<string[]>>()
         {
-            {
-                "PUSS",
-                strings =>
-                {
-                    foreach (var s in strings)
-                    {
-                        PrintToTerminal("..." + s);
-                    }
-                }
-            },
             {
                 "HELP",
                 strings =>
@@ -67,16 +55,21 @@ public class TerminalManager : MonoBehaviour
                     {
                         PrintToTerminalTabbed(_commands.Keys.ElementAt(i));
                     }
-
-                    //PrintToTerminal("");
-                    //PrintToTerminal("EXTERNAL OPERATIONS:");
-			        //for(int i = 0; i < Commands.Length; i++)
-			        //{
-			        //	PrintToTerminalTabbed(Commands[i].name);
-			        //}
 		        }
             },
-            {
+			{
+				"PING",
+				strings =>
+				{
+					PrintToTerminal("");
+					PrintToTerminal("EXTERNAL OPERATIONS:");
+					for (int i = 0; i < _connectedObjects.Count; i++)
+					{
+						PrintToTerminalTabbed(_connectedObjects.Values.ElementAt(i).ObjectType.ToString() + " - " + _connectedObjects.Keys.ElementAt(i));
+					}
+				}
+			},
+			{
                 "CLEAR",
                 strings =>
                 {
@@ -87,17 +80,8 @@ public class TerminalManager : MonoBehaviour
                 "CLOSE",
                 strings =>
                 {
-                    
-                }
-            },
-            {
-                "CO",
-                strings =>
-                {
-                    for (int i = 0; i < _connectedObjects.Count; i++)
-                    {
-                        PrintToTerminalTabbed(_connectedObjects.Values.ElementAt(i).ObjectType.ToString() + " - " + _connectedObjects.Keys.ElementAt(i));
-                    }
+					TerminalCanvas.gameObject.SetActive(false);
+					gameObject.SetActive(false);
                 }
             }
 
@@ -107,29 +91,25 @@ public class TerminalManager : MonoBehaviour
 		TerminalInputField.caretBlinkRate = 1;
 	}
     
-    public void Open(ConnectedObjectData[] connectedObjects) // string as name identifier baseclass holds type enum
+    public void Open(ConnectedObjectData[] connectedObjects)
     {
         for (int i = 0; i < connectedObjects.Length; i++)
         {
+			if (_connectedObjects.ContainsKey(connectedObjects[i].Name)) continue;
+
             _connectedObjects.Add(connectedObjects[i].Name, connectedObjects[i].Prefab);
-        }
-    }
+		}
+		TerminalCanvas.gameObject.SetActive(true);
+		ResetTerminalInputField();
+	}
 
 	private void Update()
 	{
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            ResetTerminalInputField();
-        }
-        if (Input.GetKeyDown(KeyCode.Y))
+		if (Input.GetKeyDown(KeyCode.Return))
 		{
-            TerminalTransform.gameObject.SendMessage("Open", "OPEN");
+			ParseCommand(TerminalInputField.text);
 		}
-        if (Input.GetKeyDown(KeyCode.U))
-        {
-            TerminalTransform.gameObject.SendMessage("Open", "CLOSE");
-        }
-    }
+	}
 
 	public void ParseCommand(string input)
 	{
@@ -150,17 +130,18 @@ public class TerminalManager : MonoBehaviour
 		}
 		else
 		{
-			//for(int i = 0; i < Commands.Length; i++)
-			//{
-			//	if(Commands[i].name == command)
-			//	{
-			//		PrintToTerminal(string.Format("{0}", input));
-			//		PrintToTerminal(string.Format("EXECUTING {0}", command));
-			//		Commands[i].action.Invoke();
-			//		ResetTerminalInputField();
-			//		return;
-			//	}
-			//}
+			if (_connectedObjects.ContainsKey(command))
+			{
+				if (_connectedObjects[command].ObjectType == ObjectType.Door)
+				{
+					var door = _connectedObjects[command] as Door;
+					if (door != null) PrintToTerminal(door.Open(args));
+
+					ResetTerminalInputField();
+					TerminalText.text = TerminalText.text.ToUpper();
+					return;
+				}
+			}
 		}
 
 		PrintToTerminal(string.Format("COMMAND {0} NOT RECOGNIZED...", command));

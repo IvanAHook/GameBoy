@@ -1,8 +1,8 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System;
+using UnityEngine;
 using DG.Tweening;
 
-public class Door : ConnectedObject
+public class Door : ConnectedObjectBase
 {
 
     public Transform LeftDoor;
@@ -15,18 +15,34 @@ public class Door : ConnectedObject
         base.ObjectType = ObjectType.Door;
     }
 
-	public void Open(string args)
+	public string Open(string[] args)
 	{
-		if(args == "OPEN")
+		if (args[0] == "OPEN")
 		{
 			LeftDoor.DOLocalMoveX(-1.5f, 1f);
 			RightDoor.DOLocalMoveX(1.5f, 1f);
-		} else if(args == "CLOSE")
+			return "OPENING DOOR";
+		}
+		if(args[0] == "CLOSE")
 		{
 			LeftDoor.DOLocalMoveX(-0.5f, 1f);
 			RightDoor.DOLocalMoveX(0.5f, 1f);
+			return "CLOSING DOOR";
 		}
-
+		if (args[0] == "HELP")
+		{
+			return "COMMANDS: OPEN, CLOSE";
+		}
+		return String.Format("ARGUMENT {0} NOT RECOGNIZED", args[0]);
 	}
 
+	public override void Help()
+	{
+		throw new NotImplementedException();
+	}
+
+	public override void Input()
+	{
+		throw new NotImplementedException();
+	}
 }

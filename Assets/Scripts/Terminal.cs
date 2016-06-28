@@ -9,7 +9,7 @@ public class Terminal : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.P))
+        if (Input.GetKeyDown(KeyCode.Alpha0))
         {
             TerminalManager.Instance.Open(ConnectedObjects);
         }
@@ -21,5 +21,5 @@ public class Terminal : MonoBehaviour
 public struct ConnectedObjectData
 {
     public string Name;
-    public ConnectedObject Prefab;
+    public ConnectedObjectBase Prefab;
 }

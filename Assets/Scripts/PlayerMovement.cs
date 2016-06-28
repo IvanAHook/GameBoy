@@ -1,5 +1,6 @@
 ﻿using System.Security.Permissions;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerMovement : MonoBehaviour
@@ -16,7 +17,10 @@ public class PlayerMovement : MonoBehaviour
 	}
 
 	void Update () {
-		_moveDirection = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized;
+		if (!EventSystem.current.IsPointerOverGameObject())
+		{
+			_moveDirection = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized;
+		}
 	}
 
 	void FixedUpdate()
