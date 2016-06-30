@@ -13,6 +13,16 @@ public class Terminal : MonoBehaviour
         {
             TerminalManager.Instance.Open(ConnectedObjects);
         }
+        if (Input.GetKeyDown(KeyCode.Alpha9))
+        {
+            Mover.reachedDestination += TerminalOpen;
+        }
+    }
+
+    private void TerminalOpen()
+    {
+        TerminalManager.Instance.Open(ConnectedObjects);
+        Mover.reachedDestination -= TerminalOpen;
     }
 
 }

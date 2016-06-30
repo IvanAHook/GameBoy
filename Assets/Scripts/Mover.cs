@@ -4,18 +4,21 @@
 public class Mover : MonoBehaviour
 {
 
-	private NavMeshAgent _navMeshAgent;
+    public delegate void ReachedDestination();
+    public static ReachedDestination reachedDestination;
+
+    private NavMeshAgent _navMeshAgent;
 	private Camera _camera;
 
 	private bool _moving;
 
-	void Start ()
+    private void Start ()
 	{
 		_camera = Camera.main;
 		_navMeshAgent = GetComponent<NavMeshAgent>();
 	}
-	
-	void Update () {
+
+    private void Update () {
 		if (Input.GetMouseButtonDown(0))
 		{
 			RaycastHit hit;
@@ -31,14 +34,16 @@ public class Mover : MonoBehaviour
 		}
 		if (_moving)
 		{
-			if (HasReachedDestination())
-				Debug.Log ("YAAAAY");
+		    if (HasReachedDestination() && reachedDestination != null)
+		    {
+                reachedDestination();
+		    }
+
 		}
 
 	}
 
 	private bool HasReachedDestination() {
-		// Check if we've reached the destination
 		if (!_navMeshAgent.pathPending) {
 			if (_navMeshAgent.remainingDistance <= _navMeshAgent.stoppingDistance) {
 				if (!_navMeshAgent.hasPath || _navMeshAgent.velocity.sqrMagnitude == 0f) {
@@ -48,24 +53,6 @@ public class Mover : MonoBehaviour
 			}
 		}
 		return false;
-	}
-
-	void OnTriggerEnter(Collider other) 
-	{
-		if (other.transform.tag == "Player")
-		{
-			Debug.Log (string.Format("{0} Enter terminal collider", other.transform.name));
-			// open terminal
-		}
-	}
-
-	void OnTriggerExit(Collider other)
-	{
-		if (other.transform.tag == "Player")
-		{
-			Debug.Log (string.Format("{0} Exit terminal collider", other.transform.name));
-			// set Terminal visuals to idle.
-		}
 	}
 
 }

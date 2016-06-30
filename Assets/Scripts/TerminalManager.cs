@@ -100,7 +100,8 @@ public class TerminalManager : MonoBehaviour
             _connectedObjects.Add(connectedObjects[i].Name, connectedObjects[i].Prefab);
 		}
 		TerminalCanvas.gameObject.SetActive(true);
-		ResetTerminalInputField();
+        gameObject.SetActive(true);
+        ResetTerminalInputField();
 	}
 
 	private void Update()
