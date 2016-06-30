@@ -132,15 +132,21 @@ public class TerminalManager : MonoBehaviour
 		{
 			if (_connectedObjects.ContainsKey(command))
 			{
-				if (_connectedObjects[command].ObjectType == ObjectType.Door)
-				{
-					var door = _connectedObjects[command] as Door;
-					if (door != null) PrintToTerminal(door.Open(args));
+				PrintToTerminal(_connectedObjects[command].Input(args));
 
-					ResetTerminalInputField();
-					TerminalText.text = TerminalText.text.ToUpper();
-					return;
-				}
+				ResetTerminalInputField();
+				TerminalText.text = TerminalText.text.ToUpper();
+				return;
+
+				//if (_connectedObjects[command].ObjectType == ObjectType.Door)
+				//{
+				//	var door = _connectedObjects[command] as ConnectedDoor;
+				//	if (door != null) PrintToTerminal(door.Input(args));
+
+				//	ResetTerminalInputField();
+				//	TerminalText.text = TerminalText.text.ToUpper();
+				//	return;
+				//}
 			}
 		}
 

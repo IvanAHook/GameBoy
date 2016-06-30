@@ -7,6 +7,6 @@ public abstract class ConnectedObjectBase : MonoBehaviour
 
 	public abstract void Help();
 
-	public abstract void Input();
+	public abstract string Input(string[] args);
 }
 

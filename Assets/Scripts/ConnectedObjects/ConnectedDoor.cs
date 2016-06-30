@@ -2,7 +2,7 @@
 using UnityEngine;
 using DG.Tweening;
 
-public class Door : ConnectedObjectBase
+public class ConnectedDoor : ConnectedObjectBase
 {
 
     public Transform LeftDoor;
@@ -15,7 +15,12 @@ public class Door : ConnectedObjectBase
         base.ObjectType = ObjectType.Door;
     }
 
-	public string Open(string[] args)
+	public override void Help()
+	{
+		throw new NotImplementedException();
+	}
+
+	public override string Input(string[] args)
 	{
 		if (args[0] == "OPEN")
 		{
@@ -23,7 +28,7 @@ public class Door : ConnectedObjectBase
 			RightDoor.DOLocalMoveX(1.5f, 1f);
 			return "OPENING DOOR";
 		}
-		if(args[0] == "CLOSE")
+		if (args[0] == "CLOSE")
 		{
 			LeftDoor.DOLocalMoveX(-0.5f, 1f);
 			RightDoor.DOLocalMoveX(0.5f, 1f);
@@ -34,15 +39,5 @@ public class Door : ConnectedObjectBase
 			return "COMMANDS: OPEN, CLOSE";
 		}
 		return String.Format("ARGUMENT {0} NOT RECOGNIZED", args[0]);
-	}
-
-	public override void Help()
-	{
-		throw new NotImplementedException();
-	}
-
-	public override void Input()
-	{
-		throw new NotImplementedException();
 	}
 }
