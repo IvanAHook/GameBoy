@@ -28,7 +28,14 @@ public class Mover : MonoBehaviour
 			{
 				Transform objectHit = hit.transform;
 
-				_navMeshAgent.destination = hit.point;
+				if (objectHit.GetComponent<InteractableObjectBase>())
+				{
+					Debug.Log(objectHit.name);
+					var obj = (InteractableObjectBase)objectHit.GetComponent<InteractableObjectBase>();
+					reachedDestination += obj.Interract;
+				}
+
+				_navMeshAgent.destination = new Vector3(hit.point.x, transform.position.y, hit.point.z);
 				_moving = true;
 			}
 		}

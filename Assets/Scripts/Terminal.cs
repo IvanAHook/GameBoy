@@ -1,9 +1,7 @@
 ﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 using System;
 
-public class Terminal : MonoBehaviour
+public class Terminal : InteractableObjectBase
 {
     public ConnectedObjectData[] ConnectedObjects;
 
@@ -25,6 +23,10 @@ public class Terminal : MonoBehaviour
         Mover.reachedDestination -= TerminalOpen;
     }
 
+	public override void Interract()
+	{
+		TerminalOpen();
+	}
 }
 
 [Serializable]
