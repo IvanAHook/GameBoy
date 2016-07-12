@@ -25,8 +25,11 @@
 			half NdotL = dot(s.Normal, lightDir);
 			//if (NdotL <= 0.25) NdotL = 0;
 			//else if (NdotL <= 0.75) NdotL = 0.5;
-			if (NdotL <= 0) NdotL = 0;
-			else NdotL = 1;
+
+			NdotL = smoothstep(0, 0.025f, NdotL);
+
+			//if (NdotL <= 0) NdotL = 0;
+			//else NdotL = 1;
 			half4 c;
 			c.rgb = s.Albedo * _LightColor0.rgb * (NdotL * atten * 2);
 			c.a = s.Alpha;
