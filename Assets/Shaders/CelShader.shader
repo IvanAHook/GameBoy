@@ -4,6 +4,8 @@
 	{
 		_Color("Color", Color) = (1, 1, 1, 1)
 		_MainTex("Albedo (RGB)", 2D) = "white" {}
+
+
 	}
 	SubShader
 	{
@@ -14,7 +16,9 @@
 		LOD 200
 
 		CGPROGRAM
-		#pragma surface surf CelShadingForward
+		//#pragma surface surf fullforwardshadows
+		
+		#pragma surface surf CelShadingForward fullforwardshadows
 		#pragma target 3.0
 
 		half4 LightingCelShadingForward(SurfaceOutput s, half3 lightDir, half atten) {
@@ -28,6 +32,7 @@
 			c.a = s.Alpha;
 			return c;
 		}
+
 
 		sampler2D _MainTex;
 		fixed4 _Color;
