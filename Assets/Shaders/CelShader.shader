@@ -31,7 +31,8 @@
 			//if (NdotL <= 0) NdotL = 0;
 			//else NdotL = 1;
 			half4 c;
-			c.rgb = s.Albedo * _LightColor0.rgb * (NdotL * atten * 2);
+			//c.rgb = s.Albedo * _LightColor0.rgb * (NdotL * atten * 2);
+			c.rgb = s.Albedo * _LightColor0.rgb * (NdotL);
 			c.a = s.Alpha;
 			return c;
 		}
